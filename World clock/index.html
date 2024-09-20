@@ -1,0 +1,132 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>World Clock</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.9.1/font/bootstrap-icons.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">World Clock by Sannidhaya Sharma</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Link</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Dropdown
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Action</a></li>
+                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled">Disabled</a>
+                    </li>
+                </ul>
+                <form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container my-3">
+        <h1 class="text-center">Welcome to World Clock</h1>
+
+        <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+            <div class="col">
+                <div class="card mb-4 rounded-3 shadow-sm">
+                    <div class="card-header py-3">
+                        <h4 class="my-0 fw-normal"><i class="bi bi-clock-fill"></i> India</h4>
+                    </div>
+                    <div class="card-body">
+                        <h1 class="card-title" id="india-time">Time in India</h1>
+                        <input type="time" id="india-alarm" class="form-control my-3" placeholder="Set Alarm">
+                        <button class="btn btn-primary" onclick="setAlarm('india')">Set Alarm</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card mb-4 rounded-3 shadow-sm">
+                    <div class="card-header py-3">
+                        <h4 class="my-0 fw-normal"><i class="bi bi-clock-fill"></i> United States</h4>
+                    </div>
+                    <div class="card-body">
+                        <h1 class="card-title" id="us-time">Time in US</h1>
+                        <input type="time" id="us-alarm" class="form-control my-3" placeholder="Set Alarm">
+                        <button class="btn btn-primary" onclick="setAlarm('us')">Set Alarm</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card mb-4 rounded-3 shadow-sm">
+                    <div class="card-header py-3">
+                        <h4 class="my-0 fw-normal"><i class="bi bi-clock-fill"></i> Macedonia</h4>
+                    </div>
+                    <div class="card-body">
+                        <h1 class="card-title" id="macedonia-time">Time in Macedonia</h1>
+                        <input type="time" id="macedonia-alarm" class="form-control my-3" placeholder="Set Alarm">
+                        <button class="btn btn-primary" onclick="setAlarm('macedonia')">Set Alarm</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function updateClock() {
+            document.getElementById('india-time').innerHTML = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata', hour12: true });
+            document.getElementById('us-time').innerHTML = new Date().toLocaleString('en-US', { timeZone: 'America/New_York', hour12: true });
+            document.getElementById('macedonia-time').innerHTML = new Date().toLocaleString('en-US', { timeZone: 'Europe/Skopje', hour12: true });
+
+            checkAlarm('india', 'Asia/Kolkata');
+            checkAlarm('us', 'America/New_York');
+            checkAlarm('macedonia', 'Europe/Skopje');
+        }
+
+        setInterval(updateClock, 1000); 
+
+        let alarms = {
+            india: null,
+            us: null,
+            macedonia: null
+        };
+
+        function setAlarm(country) {
+            const alarmTime = document.getElementById(`${country}-alarm`).value;
+            if (alarmTime) {
+                alarms[country] = alarmTime;
+                alert(`Alarm set for ${country} at ${alarmTime}`);
+            }
+        }
+        function checkAlarm(country, timeZone) {
+            const currentTime = new Date().toLocaleTimeString('en-GB', { timeZone: timeZone, hour12: false });
+            if (alarms[country] && currentTime === alarms[country]) {
+                alert(`Alarm ringing for ${country}!`);
+                alarms[country] = null;  // Reset alarm
+            }
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+</body>
+
+</html>
